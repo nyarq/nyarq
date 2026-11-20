@@ -20,7 +20,7 @@ jobs:
       - name: Generate metrics
         uses: lowlighter/metrics@latest
         with:
-          token: ${{ secrets.METRICS_TOKEN }}
+          token: ${{ secrets.NYARQ_11_20_TOKEN }}
           user: nyarq
           filename: github-metrics.svg
           # Render to the runner only; the next step commits it after a sanity check.
