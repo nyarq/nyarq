@@ -13,7 +13,7 @@ from generate_stats import PALETTE, MONO
 
 USERNAME = 'nyarq'
 GREETING = 'Hi there! 👋'
-BIO = 'Python · C# · SQL · Web 으로 이것저것 만들고 있어요.'
+BIO = 'Python을 주력으로 AI 관련 프로그램들을 만들고 있습니다.'
 
 # skillicons.dev ids, one row. SQL has no generic icon there, so MySQL stands in.
 SKILLS = ['python', 'cs', 'mysql', 'js', 'html', 'css']

@@ -1,14 +1,11 @@
 name: GitHub Stats
 
+# Automatic runs are off: the stats cards are not shown in the README.
+# To bring them back, restore the schedule below and re-add the cards to README.md.
+#  schedule:
+#    - cron: "0 0 * * *"
 on:
-  schedule:
-    - cron: "0 0 * * *"
   workflow_dispatch:
-  push:
-    branches: ["main"]
-    paths:
-      - "generate_stats.py"
-      - ".github/workflows/stats.yml"
 
 jobs:
   generate-stats:
