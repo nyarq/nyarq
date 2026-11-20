@@ -5,6 +5,7 @@ daily workflow: edit the values below, run `python generate_profile.py`,
 then commit the SVG.
 """
 import base64
+import re
 
 import requests
 
@@ -16,6 +17,11 @@ BIO = 'Python · C# · SQL · Web 으로 이것저것 만들고 있어요.'
 
 # skillicons.dev ids, one row. SQL has no generic icon there, so MySQL stands in.
 SKILLS = ['python', 'cs', 'mysql', 'js', 'html', 'css']
+
+# Tools skillicons.dev does not carry. Each is drawn from its Simple Icons logo
+# on the same dark rounded tile, as (simpleicons slug, logo colour).
+EXTRA_ICONS = [('dbeaver', '#ece8ff')]
+TILE_FILL = '#242938'  # skillicons.dev dark tile colour
 
 SANS = "'Segoe UI','Pretendard','Apple SD Gothic Neo','Noto Sans KR',Helvetica,Arial,sans-serif"
 
@@ -45,9 +51,34 @@ def fetchSkillIcons():
     return f'data:image/svg+xml;base64,{encoded}', ICON_HEIGHT * units / 256
 
 
+def fetchExtraTiles(startX, y):
+    """Draw each Simple Icons logo on a tile matching the skillicons.dev strip."""
+    scale = ICON_HEIGHT / 256
+    tiles = []
+    x = startX
+    for slug, colour in EXTRA_ICONS:
+        resp = requests.get(f'https://cdn.simpleicons.org/{slug}', timeout=30)
+        resp.raise_for_status()
+        pathData = re.search(r'<path[^>]*\sd="([^"]+)"', resp.text).group(1)
+        # The logo sits on a 24 unit grid; 160 of the tile's 256 units leaves the
+        # same margin the skillicons.dev logos have.
+        tiles.append(
+            f'  <g transform="translate({x:.1f},{y}) scale({scale:.5f})">\n'
+            f'    <rect width="256" height="256" rx="60" fill="{TILE_FILL}"/>\n'
+            f'    <g transform="translate(48,48) scale({160 / 24:.5f})">\n'
+            f'      <path d="{pathData}" fill="{colour}"/>\n'
+            f'    </g>\n'
+            f'  </g>'
+        )
+        x += 300 * scale
+    return '\n'.join(tiles)
+
+
 def generateProfileSvg(path):
     p = PALETTE
     iconHref, iconWidth = fetchSkillIcons()
+    # Continue the strip with the same 44 unit gap the skillicons.dev icons use.
+    extraTiles = fetchExtraTiles(56 + iconWidth + 44 * ICON_HEIGHT / 256, 248)
 
     svg = f'''<svg width="{WIDTH}" height="{HEIGHT}" viewBox="0 0 {WIDTH} {HEIGHT}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hi, I'm {USERNAME}">
   <defs>
@@ -84,6 +115,7 @@ def generateProfileSvg(path):
   <rect x="56" y="222" width="3" height="12" rx="1" fill="{p["accent"]}"/>
   <text x="66" y="232" font-family="{MONO}" font-size="11.5" font-weight="600" letter-spacing="1.6" fill="{p["muted"]}">SKILLS</text>
   <image x="56" y="248" width="{iconWidth:.1f}" height="{ICON_HEIGHT}" href="{iconHref}"/>
+{extraTiles}
 
   <rect x="0.5" y="0.5" width="{WIDTH - 1}" height="{HEIGHT - 1}" rx="10" stroke="{p["line"]}" stroke-opacity="{p["edgeAlpha"]}"/>
 </svg>'''
