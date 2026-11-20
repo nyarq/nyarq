@@ -6,14 +6,6 @@
 ### About
 <a href="https://github.com/nyarq"><img src="https://img.shields.io/badge/GitHub-0A0910?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
 
-### Stats
-
-<div align="center">
-  <img src="./github-stats.svg" alt="GitHub Stats"/>
-  <br/><br/>
-  <img src="./github-hours.svg" alt="Commits by hour of day"/>
-</div>
-
 <!-- Collapsed: the metrics card is long and the snake keeps repainting while visible -->
 <details>
   <summary><b>More</b></summary>
