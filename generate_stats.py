@@ -382,8 +382,17 @@ def generateHoursSvg(activity, path):
     print(f'Generated {path} - peak {peak:02d}:00, {activity["total"]} commits read')
 
 
-if __name__ == '__main__':
+def main():
     if not TOKEN:
-        raise SystemExit('GITHUB_TOKEN is not set')
+        raise RuntimeError('GITHUB_TOKEN is empty - check the METRICS_TOKEN secret value')
     generateStatsSvg(fetchStats(), STATS_PATH)
     generateHoursSvg(fetchCommitHours(), HOURS_PATH)
+
+
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as error:
+        # Surface the reason as a run annotation so it shows on the summary page.
+        print(f'::error title=generate_stats failed::{type(error).__name__}: {error}')
+        raise SystemExit(1)
