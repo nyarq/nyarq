@@ -28,7 +28,7 @@ GREETING = 'Hi there! 👋'
 BIO = 'Python을 주력으로 AI 관련 프로그램들을 만들고 있습니다.'
 
 # skillicons.dev ids, one row. SQL has no generic icon there, so MySQL stands in.
-SKILLS = ['python', 'cs', 'mysql', 'js', 'html', 'css']
+SKILLS = ['python', 'cs', 'mysql', 'js', 'html', 'css', 'cloudflare']
 
 # Tools skillicons.dev does not carry. Each is drawn from its Simple Icons logo
 # on the same dark rounded tile, as (simpleicons slug, logo colour).
