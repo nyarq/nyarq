@@ -9,7 +9,19 @@ import re
 
 import requests
 
-from generate_stats import PALETTE, MONO
+# Purple on near-black. Change these values to retheme the card.
+PALETTE = {
+    'ground': '#0a0910',   # card background (almost black)
+    'text': '#ece8ff',     # name
+    'muted': '#958db3',    # greeting, bio, labels
+    'accent': '#a78bfa',   # username, corner mark, label tick
+    'glow': '#6d28d9',     # glow behind the corner, bottom of the side bar
+    'spark': '#f0abfc',    # top of the side bar
+    'line': '#a78bfa',     # card border
+    'edgeAlpha': '0.30',
+}
+
+MONO = "'SF Mono','SFMono-Regular','Cascadia Mono','Segoe UI Mono','Roboto Mono','DejaVu Sans Mono',monospace"
 
 USERNAME = 'nyarq'
 GREETING = 'Hi there! 👋'
